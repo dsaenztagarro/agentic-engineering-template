@@ -18,7 +18,7 @@ Use it **only for generalizable, project-agnostic** improvements to the agentic 
 |---|---|
 | A missing/weak rule in `AGENTS.md`'s portable sections | A project-specific rule → edit *this* repo's `AGENTS.md` |
 | A skill (`epic`, this one, …) whose steps could be clearer/safer | A bug in this project's code or tests |
-| A docs-taxonomy gap (ADR vs explainer vs guide vs feature) | A one-off decision → an ADR in *this* repo |
+| A docs-taxonomy gap (record vs topic guide vs test) | A one-off decision → the theme's record in *this* repo |
 | A portable principle worth adding (testing, model selection, docs style) | Project content, copy, or config |
 
 The tell for "generalizable": the improvement is phrased without naming this project, its language, or its framework. If you cannot state it project-agnostically, it belongs in this repo's `AGENTS.md`, not upstream — apply it there and stop.
@@ -32,7 +32,7 @@ The tell for "generalizable": the improvement is phrased without naming this pro
 
 ## 1. Confirm it's generalizable
 
-Restate the improvement in one project-agnostic sentence. If you can't (it names this project/language/framework), it's local: apply it to this repo's `AGENTS.md` or an ADR and **stop** — do not take it upstream.
+Restate the improvement in one project-agnostic sentence. If you can't (it names this project/language/framework), it's local: apply it to this repo's `AGENTS.md` or the theme's decision record and **stop** — do not take it upstream.
 
 ## 2. Locate the artifact it touches
 
@@ -41,8 +41,9 @@ Identify the single template file the change lands in, e.g.:
 ```
 AGENTS.md                                  # a rule/principle
 .claude/skills/<name>/SKILL.md             # a skill's steps
-docs/architecture/decisions/README.md      # ADR conventions
-docs/{guides,features,designs}/README.md   # a docs-taxonomy fix
+docs/adr/README.md                         # decision-record conventions
+docs/adr/0001-decision-records.md          # what goes where, and why it is bounded
+docs/guide-design-handoff.md               # the Claude Design procedure
 README.md                                  # the template's own overview
 ```
 
@@ -95,5 +96,5 @@ Report the issue URL back. If the user instead asks for a **PR**, branch the ups
 ## Guardrails
 
 - No upstream write (issue or PR) without explicit user approval in the current turn.
-- Never rewrite an accepted ADR or a skill's contract as a "fix" — propose a superseding change and let the human decide.
+- Never rewrite a decision record or a skill's contract as a "fix" — propose the change and let the human decide.
 - If unsure whether an idea is generalizable or project-local, ask the user rather than guessing.

@@ -1,7 +1,7 @@
 ---
 name: epic
-description: Turn a design doc into a GitHub epic — decompose the design into self-contained sub-issues with a phased plan, then implement them one ticket at a time (branch → tests → PR → squash-merge), carrying every pragmatic decision forward on the epic issue so later tickets inherit the context. The design doc is a UI design (a Claude Design canvas under `docs/designs/*.html`) or a backend/architecture design authored as markdown (`docs/architecture/*.md` or `docs/features/*.md`). User-invoked only; the user reviews the work at the very end. Run `/epic <design-path>` to start, or `/epic resume #<epic>` to continue.
-argument-hint: "<docs/designs/*.html | docs/architecture/*.md | docs/features/*.md> | resume #<epic>"
+description: Turn a design doc into a GitHub epic — decompose the design into self-contained sub-issues with a phased plan, then implement them one ticket at a time (branch → tests → PR → squash-merge), carrying every pragmatic decision forward on the epic issue so later tickets inherit the context. The design doc is a UI design (a page Claude Design returned, in the design repository) or a backend design authored as markdown, which is an input deleted at close-out. User-invoked only; the user reviews the work at the very end. Run `/epic <design-path>` to start, or `/epic resume #<epic>` to continue.
+argument-hint: "<design page | backend design .md> | resume #<epic>"
 ---
 
 # Run an epic from a design doc
@@ -23,8 +23,10 @@ decomposes:
 
 | Kind | Lives in | Authored by | Decomposes by |
 |------|----------|-------------|---------------|
-| **UI / visual** | `docs/designs/*.html` | **Claude Design** (from a design brief) | the doc's sections/anchors; each interactive workflow becomes a spec'd ticket |
-| **Backend / architecture** | `docs/architecture/*.md` (a cross-cutting contract) or `docs/features/*.md` (a feature's design) | authored directly as markdown from an approved plan/ADR | its own section headings and phase ordering; each layer that can merge green becomes a ticket |
+| **UI / visual** | a page in the design repository (see `docs/guide-design-handoff.md`) | **Claude Design** (from a design brief) | the page's sections; each interactive workflow becomes a ticket with a test |
+| **Backend / architecture** | a markdown input, anywhere the user points | authored directly from an approved plan | its own section headings and phase ordering; each layer that can merge green becomes a ticket |
+
+**A design is an input, and inputs are deleted when what they produced ships.** A backend design is deleted at close-out (step 4) once its durable half has landed — the reasoning in a theme's decision record, the behaviour in tests, open work in issues. A UI page stays in the design repository; its brief is closed there.
 
 For a backend design there are no visual workflows — "design fidelity" means the contracts the
 doc specifies, verified by unit/integration tests rather than UI tests. When a section can't merge
@@ -39,8 +41,9 @@ two PRs.
   _and_ on the sub-issue. Before each ticket, re-read the log.
 - **Terse terminal, rich issues.** No diff dumps, no test-log dumps, no plan narration. Emit one
   short status line per ticket. The detailed record lives in the issues and the epic.
-- **Document where it belongs.** Pragmatic ticket decision → sub-issue + epic log. Architecturally
-  meaningful decision → _also_ a numbered ADR (see step 3.5).
+- **Document where it belongs.** Pragmatic ticket decision → sub-issue + epic log, and nothing
+  else while the epic runs. Decisions that clear the bar reach `docs/adr/` **once, at close-out**
+  (step 4), by amending their themes — never a file per ticket or per decision.
 - **Follow the repo's rules.** `AGENTS.md` governs implementation, testing, commits, and the
   test/lint **gate**. Read it; don't restate it here.
 - **Design fidelity is verified, not assumed.** Every workflow the design specifies must have a
@@ -150,23 +153,16 @@ contaminating whatever PR points at it. Before the first push, run
 
 ### 3.4 Implement
 Follow `AGENTS.md` and the established repo conventions. Reuse before you build. For a UI ticket,
-match the Claude Design canvas exactly and reference the design system (per `AGENTS.md`).
+build to the page with the vendored design artefact only (per `AGENTS.md`).
 
-### 3.5 ADR gate (architecturally meaningful decisions only)
-If this ticket made a decision that's architecturally meaningful (a data-model or interface
-contract, a cross-cutting integration choice, a security boundary — not a local code choice),
-record an ADR:
-- copy `docs/architecture/decisions/template.md` → next free `NNNN-<slug>.md`,
-- fill Context / Decision / Alternatives considered / Consequences, ASCII diagrams only,
-- add the index row to `docs/architecture/decisions/README.md`,
-- reference the sub-issue and epic in the ADR's References section.
+### 3.5 Tests state the rule
+Every behaviour the ticket delivers gets a test named for the rule it holds. That test is the
+specification; no prose restates it. If the ticket changed a mechanism with a topic guide
+(`docs/guide-<topic>.md`), amend that guide in the same PR — never add a file for the ticket.
 
-If the ticket built or materially changed a non-trivial mechanism, update its how-it-works
-explainer under `docs/architecture/` in the same PR (per `AGENTS.md`).
-
-If the ticket shipped or materially changed a substantial feature, write or update its behaviour
-spec `docs/specs/<feature>.md` in the same PR (per `AGENTS.md`) — and cite it from the code the
-ticket touches in the compact form `(docs/specs/<file>.md — <heading>)`, never a design file.
+A decision that looks architectural goes on the epic's Decisions Log tagged **`record`**, and is
+carried to its theme at close-out. Recording it per ticket is how one project reached 64 records
+in three months.
 
 ### 3.6 Test gate
 The project's **test + lint gate** (as defined in `AGENTS.md`) must pass. Fix failures before going
@@ -200,7 +196,11 @@ When every ticket is shipped or consciously skipped:
    note listing the skipped tickets and what would unblock them.
 3. If deployment is a separate, human-gated step in this project, **do not deploy** — print the
    handoff so the user can deploy.
-4. Print a brief final summary: tickets shipped, tickets skipped + why, ADRs created, the headline
+4. **Records, once.** Read the Decisions Log entries tagged `record`. For each that clears the bar
+   in `docs/adr/README.md`, amend the record that owns its theme and log the change on that theme's
+   decision-log issue. One that fits no theme: stop and ask — a new theme is the maintainer's call.
+5. **Delete the backend design input**, once its durable half has landed (records, tests, issues).
+6. Print a brief final summary: tickets shipped, tickets skipped + why, themes amended, the headline
    pragmatic decisions, and the release version.
 
 ## Epic body template
@@ -232,9 +232,9 @@ When every ticket is shipped or consciously skipped:
 
 - The **approval gate in step 1.7 is the only mid-run pause.** Everything after runs to completion
   without asking — the user reviews the finished work at the end.
-- The Decisions Log is **append-only.** Don't rewrite earlier entries. An accepted ADR is likewise
-  immutable — supersede with a new ADR, never edit in place.
+- The Decisions Log is **append-only.** Don't rewrite earlier entries. A decision record is the
+  opposite: amended in place, because it states the current position.
 - Resume safety: a ticket is "done" only when its box is checked and its PR is merged — read the
   epic's checklist state, not local git.
-- Keep the design-doc link relative so it resolves in the repo; link the specific section anchor
-  when a UI doc exposes one.
+- Link the design from the epic and its issues, never from code: a page regenerates and an input
+  is deleted.
