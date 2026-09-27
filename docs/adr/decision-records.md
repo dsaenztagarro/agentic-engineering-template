@@ -1,4 +1,4 @@
-# 0001 — Decision records
+# Decision records
 
 **Status:** Live · **Decision log:** <!-- FILL: this theme's decision-log issue -->
 
@@ -28,9 +28,13 @@ A kind of document may grow with the product's *areas* — themes, topics — bu
 
 Prose never records what the code currently does. A claim about code state in a durable document is born rotting; "not yet built" is work status and belongs on an issue.
 
-### Records are themed, capped at ten, and amended in place
+### Records are a few broad themes, named for the theme, and amended in place
 
 A decision amends its theme's record and never opens a sibling. The superseded reasoning moves to the theme's decision-log issue; git holds the text. [The README](README.md) carries the bar and the procedure.
+
+What keeps the set small is the breadth of each theme, not a number: a theme is drawn wide enough that the next decision in its area lands in it, and a new record has to argue why no existing theme fits.
+
+A record is named for its theme — `storage.md`, not `0004-storage.md`. A record amended in place is always current, so an order of creation says nothing about it, and a citation that reads "the storage record" needs no lookup where "0004" does.
 
 ### An input is deleted when what it produced ships
 
@@ -45,6 +49,8 @@ A brief, a backend design, a review — each is written in the future tense, so 
 - **Immutable records superseded by new files.** Optimises for an audit trail git already keeps, and shelves a wrong decision beside the right one.
 - **A feature page per capability.** Its whole content is a narrative of current behaviour, so the folder is born rotting.
 - **A behaviour spec per feature, cited from code.** Duplicates the tests in prose that cannot fail, and grows with every feature.
+- **A fixed cap on the number of records, or a line ceiling per record, enforced by a check.** A count says nothing about whether the themes are broad, and a ceiling pushes a growing theme to split into narrow ones — the per-decision ledger again, one step removed.
+- **Numbering records.** Numbers order immutable per-decision records; a theme record is amended in place, so the number carries nothing and a merged theme leaves a gap to explain.
 
 ## Left open
 
@@ -52,4 +58,4 @@ A brief, a backend design, a review — each is written in the future tense, so 
 
 ## References
 
-[`README.md`](README.md) · [`template.md`](template.md) · `.github/workflows/docs.yml`, which enforces the cap and the ceiling
+[`README.md`](README.md) · [`template.md`](template.md)

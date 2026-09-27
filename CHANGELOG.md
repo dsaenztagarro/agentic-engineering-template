@@ -9,12 +9,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 
 - **Renamed to `agentic-engineering-template`.** "AI engineering" names building applications on language models; this template is about engineering *with* agents.
-- **Every corpus an agent reads is bounded.** Decision records move to `docs/adr/`: one per theme, at most ten, each under sixty lines, amended in place, with superseded reasoning on a per-theme decision-log issue. `/epic` amends themes once, at close-out, instead of writing a record per ticket. `docs/adr/0001-decision-records.md` records why.
+- **Every corpus an agent reads is bounded.** Decision records move to `docs/adr/`: a few broad themes, one record each, named for the theme and amended in place, with superseded reasoning on a per-theme decision-log issue. `/epic` amends themes once, at close-out, instead of writing a record per ticket. `docs/adr/decision-records.md` records why.
 - **Design content moves to a sibling `<project>-ds` repository**, with one generated artefact crossing. `docs/guide-design-handoff.md` and its slides are the procedure, including the three routes into a Claude Design project.
 
 ### Added
 
-- **`.github/workflows/docs.yml`**, which fails the build on an eleventh record, a record over sixty lines, or a folder that grows one file per work item.
 - **A `brief-closer` agent**, which closes a brief once its surface ships and verifies each ask before deleting anything.
 
 ### Removed
