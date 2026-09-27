@@ -42,7 +42,7 @@ Identify the single template file the change lands in, e.g.:
 AGENTS.md                                  # a rule/principle
 .claude/skills/<name>/SKILL.md             # a skill's steps
 docs/adr/README.md                         # decision-record conventions
-docs/adr/0001-decision-records.md          # what goes where, and why it is bounded
+docs/adr/decision-records.md               # what goes where, and why it is bounded
 docs/guide-design-handoff.md               # the Claude Design procedure
 README.md                                  # the template's own overview
 ```
