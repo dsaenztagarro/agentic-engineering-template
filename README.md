@@ -99,6 +99,48 @@ Test the real thing; don't mock the object under test. Prefer real collaborators
 
 A template only gets better if the improvements people discover while *using* it flow back. `.claude/skills/template-feedback/SKILL.md` is that return path: when an agent (or you) finds a **reusable, project-agnostic** improvement to the workflow — a rule that should exist in `AGENTS.md`, a skill step that misfires, a docs-taxonomy gap — the skill surfaces a concrete proposal and, on your OK, opens a GitHub **issue on this template repo** so every adopter inherits the fix. It never edits the template silently, and it's scoped to *generalizable* improvements (project-specific rules stay in that project's `AGENTS.md`). `AGENTS.md` primes agents to reach for it — the "raise the hand" rule under **Improving this workflow**.
 
+### 10. Skills and agents — what ships, and what to create
+
+A procedure an agent follows is a skill: its body loads only when invoked, so it costs nothing on the tasks that do not need it. The workflow uses three kinds.
+
+**Shipped here** — generic, in `.claude/`:
+
+| | Does |
+|---|---|
+| `/epic` | turns a design into a GitHub epic of dependency-ordered tickets, then ships them one at a time |
+| `design-handoff` | the Claude Design procedure: which repository is which, the three routes into the project, writing a brief, reading an export back |
+| `template-feedback` | proposes a reusable workflow improvement as an issue on this template |
+| `brief-closer` (agent) | closes a brief once its surface ships, verifying each ask before deleting anything |
+
+**Create per project** — they name the project's own artefact, so the template cannot ship them:
+
+| | Does |
+|---|---|
+| `read-designs` | vendors the one generated artefact from `<project>-ds`, reports what changed, and hands any satisfied brief to `brief-closer` |
+| `design-curator` (agent, UI projects) | adopts a design that has shipped: deletes the app's copies of what the bundle now provides, and writes the components it ships but the app never uses |
+
+**Create once, at user level** — shared by every project (for instance in a dotfiles repository), never copied into each one, because a copy per project drifts:
+
+| | Does |
+|---|---|
+| `tracker-plan` | publishes a confirmed plan as a marked section of the epic's description, and files or amends the sub-issues it calls for — the tracker is the only record of what is planned |
+| `tracker-resume` | briefs the project from the tracker and git at the start of a session, leading with the note the last pause left, and reports where the two disagree |
+| `tracker-pause` | writes a "where I stopped" note — branch, the step reached, the one next action, open questions — into the in-progress ticket, replaced on every pause |
+| `tracker-close` | closes a ticket only with evidence: each done-when line checked against a named test or a command's output, live checks handed to a person |
+| `deps-upgrade` | lands a backlog of dependency pull requests: audits the lock, sorts by risk, batches the safe ones through the real gate |
+| a knowledge-capture skill | files a reusable, project-agnostic lesson into a notes repository, so it outlives the project that taught it |
+
+**Where each phase of the work lives:**
+
+```
+  Plan      research, then /tracker-plan            -> the epic's description
+  Build     one ticket at a time, one worktree each  (claude --worktree issue-<N>)
+            /epic drives a multi-ticket design
+  Verify    the ticket's own procedure, lower levels first; a live check goes to a person
+  Close     /tracker-close; amend the theme's record; brief-closer deletes a shipped brief
+  Resume    /tracker-resume; /tracker-pause before stopping
+```
+
 ## Applying the template to a new project
 
 1. **Create the repo** from this template (GitHub **Use this template**, or clone and re-init git).
@@ -107,6 +149,7 @@ A template only gets better if the improvements people discover while *using* it
 4. **Name your first themes** in `docs/adr/README.md` as the first decisions in each area are made, and open a `decision-log` issue per theme (`gh label create decision-log` once, then one issue per record).
 5. **For a UI**, create the `<project>-ds` repository and fill in the names in the `design-handoff` skill; otherwise delete the skill.
 6. Copy `.claude/settings.local.json.example` → `.claude/settings.local.json` and adjust.
+7. **Install the user-level skills** in §10 if you do not have them yet, and create the per-project ones when the project first has a design to read.
 
 ## Layout
 

@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - **A `brief-closer` agent**, which closes a brief once its surface ships and verifies each ask before deleting anything.
 - **A `design-handoff` skill**, the Claude Design procedure an agent follows when it writes a brief or reads an export back.
+- **README §10 lists the skills the workflow uses**: the ones shipped here, the ones each project creates (`read-designs`, `design-curator`), and the user-level ones created once for every project (`tracker-plan`, `tracker-resume`, `tracker-pause`, `tracker-close`, `deps-upgrade`, knowledge capture), with the phase of the work each carries.
 
 ### Removed
 
