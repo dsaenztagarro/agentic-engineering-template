@@ -23,7 +23,7 @@ decomposes:
 
 | Kind | Lives in | Authored by | Decomposes by |
 |------|----------|-------------|---------------|
-| **UI / visual** | a page in the design repository (see `docs/guide-design-handoff.md`) | **Claude Design** (from a design brief) | the page's sections; each interactive workflow becomes a ticket with a test |
+| **UI / visual** | a page in the design repository (see the `design-handoff` skill) | **Claude Design** (from a design brief) | the page's sections; each interactive workflow becomes a ticket with a test |
 | **Backend / architecture** | a markdown input, anywhere the user points | authored directly from an approved plan | its own section headings and phase ordering; each layer that can merge green becomes a ticket |
 
 **A design is an input, and inputs are deleted when what they produced ships.** A backend design is deleted at close-out (step 4) once its durable half has landed — the reasoning in a theme's decision record, the behaviour in tests, open work in issues. A UI page stays in the design repository; its brief is closed there.
@@ -157,8 +157,8 @@ build to the page with the vendored design artefact only (per `AGENTS.md`).
 
 ### 3.5 Tests state the rule
 Every behaviour the ticket delivers gets a test named for the rule it holds. That test is the
-specification; no prose restates it. If the ticket changed a mechanism with a topic guide
-(`docs/guide-<topic>.md`), amend that guide in the same PR — never add a file for the ticket.
+specification; no prose restates it. A command the ticket added goes in the README, and a
+procedure it changed in the skill that runs it — never a file for the ticket.
 
 A decision that looks architectural goes on the epic's Decisions Log tagged **`record`**, and is
 carried to its theme at close-out. Recording it per ticket is how one project reached 64 records

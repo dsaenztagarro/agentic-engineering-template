@@ -8,7 +8,7 @@ tools: Bash, Read, Write, Edit, Glob, Grep
 
 A brief is an **input**, and its lifecycle ends at ship. Every sentence in it is in the future tense, so a shipped brief tells its reader to do work already done. Deleting the file is the last and trivial step; the job is everything that has to be true first.
 
-The procedure and the repository names are in `docs/guide-design-handoff.md`. Read it first.
+The procedure and the repository names are in the `design-handoff` skill. Read it first.
 
 ## Verify at the source
 

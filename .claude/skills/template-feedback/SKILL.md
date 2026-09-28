@@ -18,7 +18,7 @@ Use it **only for generalizable, project-agnostic** improvements to the agentic 
 |---|---|
 | A missing/weak rule in `AGENTS.md`'s portable sections | A project-specific rule → edit *this* repo's `AGENTS.md` |
 | A skill (`epic`, this one, …) whose steps could be clearer/safer | A bug in this project's code or tests |
-| A docs-taxonomy gap (record vs topic guide vs test) | A one-off decision → the theme's record in *this* repo |
+| A docs-taxonomy gap (what belongs in a record, a test, the README or a skill) | A one-off decision → the theme's record in *this* repo |
 | A portable principle worth adding (testing, model selection, docs style) | Project content, copy, or config |
 
 The tell for "generalizable": the improvement is phrased without naming this project, its language, or its framework. If you cannot state it project-agnostically, it belongs in this repo's `AGENTS.md`, not upstream — apply it there and stop.
@@ -43,7 +43,7 @@ AGENTS.md                                  # a rule/principle
 .claude/skills/<name>/SKILL.md             # a skill's steps
 docs/adr/README.md                         # decision-record conventions
 docs/adr/decision-records.md               # what goes where, and why it is bounded
-docs/guide-design-handoff.md               # the Claude Design procedure
+.claude/skills/design-handoff/SKILL.md     # the Claude Design procedure
 README.md                                  # the template's own overview
 ```
 
