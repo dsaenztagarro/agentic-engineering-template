@@ -1,9 +1,14 @@
+---
+name: design-handoff
+description: The Claude Design handoff loop — which repository is which, the three routes into the design project, writing a brief, reading an export back, and closing a brief out. Use when writing a design brief, handing work to Claude Design, reading an export back into the design repository, or building a surface from a design page.
+---
+
 # Working with Claude Design: the handoff loop
 
 How a design change gets from an idea to something this application renders, and what an agent may and may not touch on the way.
 This is an operating procedure — the order matters, and two of its steps exist to stop a class of silent loss.
 
-The pictures are in [`slides-design-handoff.md`](slides-design-handoff.md). If this project has no user interface, delete both files and the design row of `AGENTS.md`.
+If this project has no user interface, delete this skill and the design row of `AGENTS.md`.
 
 ## 1. Three names, and which one you are in
 

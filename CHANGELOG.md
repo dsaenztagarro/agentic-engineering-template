@@ -10,15 +10,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - **Renamed to `agentic-engineering-template`.** "AI engineering" names building applications on language models; this template is about engineering *with* agents.
 - **Every corpus an agent reads is bounded.** Decision records move to `docs/adr/`: a few broad themes, one record each, named for the theme and amended in place, with superseded reasoning on a per-theme decision-log issue. `/epic` amends themes once, at close-out, instead of writing a record per ticket. `docs/adr/decision-records.md` records why.
-- **Design content moves to a sibling `<project>-ds` repository**, with one generated artefact crossing. `docs/guide-design-handoff.md` and its slides are the procedure, including the three routes into a Claude Design project.
+- **Design content moves to a sibling `<project>-ds` repository**, with one generated artefact crossing. The `design-handoff` skill is the procedure, including the three routes into a Claude Design project.
+
+- **Each ticket gets its own worktree**, `claude --worktree issue-<N>` under a git-ignored `.claude/worktrees/`, so two agents never share a checkout and the same name re-enters it.
 
 ### Added
 
 - **A `brief-closer` agent**, which closes a brief once its surface ships and verifies each ask before deleting anything.
+- **A `design-handoff` skill**, the Claude Design procedure an agent follows when it writes a brief or reads an export back.
+- **README §10 lists the skills the workflow uses**: the ones shipped here, the ones each project creates (`read-designs`, `design-curator`), and the user-level ones created once for every project (`tracker-plan`, `tracker-resume`, `tracker-pause`, `tracker-close`, `deps-upgrade`, knowledge capture), with the phase of the work each carries.
 
 ### Removed
 
-- **`docs/features/`, `docs/specs/`, `docs/guides/`, `docs/architecture/` and `docs/designs/`.** Each grew one file per feature, decision or brief. Behaviour is stated by tests, the reasoning by themed records, and a mechanism worth explaining by one topic guide.
+- **`docs/features/`, `docs/specs/`, `docs/guides/`, `docs/architecture/` and `docs/designs/`.** Each grew one file per feature, decision or brief. Behaviour is stated by tests, the reasoning by themed records, commands by the README and procedures by skills; nothing describes how the code works, because the code and its tests already do.
 
 ## [0.1.0] - 2026-08-13
 
