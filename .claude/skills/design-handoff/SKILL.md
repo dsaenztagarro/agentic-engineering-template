@@ -143,6 +143,17 @@ A brief ends when its surface ships here, so the ticket that ships a surface car
 
 A brief whose asks all landed closes. One where some did not stays, with the remainder reported. One that got what it asked for while the doing broke something else closes, and owes a follow-up brief. The **`brief-closer`** agent does this, and verifies before it deletes.
 
+### Before a reshape, triage the queue
+
+A reshape — a sweep or redraw across many pages of the design project — starts only once every open brief has been checked against the current export. A brief is written against the pages as they stood; a reshape that moves them leaves each one describing a page that no longer exists, and nobody notices until someone pastes it. So, for every brief in `briefs/proposed/`, before the reshape is asked for:
+
+- **landed** — delete it;
+- **outdated** — its premise is gone: delete it, or rewrite it against the current pages;
+- **in the wrong repository** — it changes a shared component: move it to the shared system's `briefs/proposed/`, rewritten for that project;
+- **still open** — carry it into the reshape's brief, or keep it and check it again once the reshape's export lands.
+
+A long queue is the signal to triage, not to reshape: the reshape waits until the queue holds only briefs that will survive it.
+
 ## 9. What an agent must not do
 
 - **Edit the export mirror**, or the vendored artefact here.
