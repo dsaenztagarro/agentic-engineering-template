@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- **How a product's design project keeps its copy of the shared system current.** `design-handoff` §5 states that the project draws against its own `_ds/` copy, which only the project refreshes; the two-read check that tells a stale copy (`landed.md`, `DS-STAMP`, the component-import count); the four landing steps in order; and `ds-sync.md`, the project's record of the current position. The `design-repo` skill carries a starter `ds-sync.md` for the project.
+
 ## [0.3.0] - 2026-10-05
 
 ### Added

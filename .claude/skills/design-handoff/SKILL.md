@@ -79,6 +79,23 @@ When the project's pages need a component that system does not ship, the project
 - **The request lives with the system that will draw it.** One brief per component, attached to the shared system's project one at a time, and deleted once it lands — never queued inside the product's export, where nothing reviews it and the shared system cannot see it.
 - **Delete the stand-in only against a snapshot that carries the component.** Removed against a stale copy of the shared system, the surface loses its styling and nothing fails.
 
+### The project's copy of the shared system, and how it stays current
+
+A product's design project draws every page against `_ds/`, **its own copy** of the shared system, frozen at the moment it was copied.
+The copy does not follow the shared system: a request that lands there reaches this project only when **the project re-copies `_ds/`**, and nothing does that for it. The export carries whatever copy the project holds, so a sync cannot fix a stale one.
+
+The project keeps that question answered in **`ds-sync.md`**, a file of its own, and reads it before claiming anything about the shared system:
+
+1. **The two-read check.** Read the shared system's `landed.md` in its project, then `_ds/landed.md` here. The copy is **stale** when the second is missing, or its `DS-STAMP` or component-import count is behind the first. A stale copy is refreshed first — never a reason to re-send a request, never a copy to compare anything against.
+2. **The landing, in order** — skipping the third step is how a landed component goes on reading as *in flight*:
+   1. the request lands in the shared system's project;
+   2. that project adds a grep sentinel for it to its `landed.md`;
+   3. this project re-copies `_ds/`, and re-runs the sentinel greps against it;
+   4. this project deletes the stand-in the landing retires, and updates `ds-sync.md`.
+3. **`ds-sync.md` states the current position only**: the verdict with its date and stamp, what is in flight by component, and the open questions for the shared system. What landed when is history; it goes on the tracker, and git keeps the old wording.
+
+The `design-repo` skill carries a starter for it.
+
 ## 6. The loop
 
 ```

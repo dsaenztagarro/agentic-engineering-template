@@ -71,6 +71,7 @@ The requests made **to this repository's Claude Design project**, and nothing el
 
 - **A mirror.** `bin/sync` writes it with `rsync -a --delete`; nobody edits it by hand, and it is committed as produced, defects included.
 - **`pages/_ds/<project-id>/` is committed.** It is the snapshot of the shared system the pages were drawn and render against, as the export carries it. A page must render the same on any clone, so it is never a symlink to a local checkout of the shared system, and never git-ignored.
+- **The design project keeps `ds-sync.md`** beside its pages: whether its `_ds/` copy is current, what is in flight, and the open questions for the shared system — the current position only. It arrives here with the export; `design-handoff` §5 has how the copy is checked and refreshed.
 - The snapshot is not a second source: the shared system's repository is. A diff between `pages/_ds/<project-id>/` and the shared system's `system/` shows how far behind it is.
 - What a page may hold is ruled in §4 of the skill: the surface, never the application.
 
