@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- **A layout check for design repositories**, `test/layout_test.rb` in the `design-repo` skill's skeleton: each design repository copies it into its own `test/`, so `rake` fails when the repository leaves the layout — an unnamed root entry, a symlink, an ignored part of an export, a request queue inside an export, a misnamed brief or vendored system, a `CLAUDE.md` that is not an import, scratch left trackable.
+
 ## [0.2.0] - 2026-10-05
 
 ### Changed

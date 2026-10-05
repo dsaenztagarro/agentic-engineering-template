@@ -53,6 +53,8 @@ A product may also own a Design System project of its own, when it extends a sha
 
 A folder that does not apply is absent, never empty. A folder not in this tree is not added without amending this file first.
 
+**`test/layout_test.rb` holds a repository to this layout** in its own `rake`: the closed rules below — the root's entries, no symlinks, nothing in an export ignored, no queue inside an export, how briefs and vendored systems are named, `CLAUDE.md` as an import, scratch kept untracked. Every design repository carries a copy of it, taken from the `design-repo` skill's skeleton and refreshed from there, never edited in place.
+
 ## Folder by folder
 
 ### `briefs/`
