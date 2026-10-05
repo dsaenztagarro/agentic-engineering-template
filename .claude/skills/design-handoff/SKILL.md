@@ -1,6 +1,6 @@
 ---
 name: design-handoff
-description: The Claude Design handoff loop — which repository is which, the three routes into the design project, writing a brief, reading an export back, and closing a brief out. Use when writing a design brief, handing work to Claude Design, reading an export back into the design repository, or building a surface from a design page.
+description: The Claude Design handoff loop — which repository is which, how a design repository is laid out, the three routes into the design project, writing a brief, reading an export back, and closing a brief out. Use when creating or reviewing a design repository, writing a design brief, handing work to Claude Design, reading an export back into the design repository, or building a surface from a design page.
 ---
 
 # Working with Claude Design: the handoff loop
@@ -22,6 +22,8 @@ If this project has no user interface, delete this skill and the design row of `
 
 **A design project is named for the codebase it draws for** — `<project>-ds` beside `<project>` — so the name says which checkout its export syncs into.
 A design system shared by several projects is named for its brand or the package that ships it, never for its platform: a `web-ds` points at no repository, and stops being true the day a second web system exists.
+
+**Every design repository has one layout**, whether it holds a product's design or a shared design system: [`layout.md`](layout.md) states it folder by folder. Read it before creating a design repository or adding a folder to one.
 
 The design repository and the design project share a name. Say *repository* or *project*: the difference decides whether an edit survives.
 
@@ -71,10 +73,10 @@ A sentence on a page about how the application behaves is true the day it is dra
 ## 5. A component the shared design system lacks: one stand-in, landed by deletion
 
 Only where a shared design system is vendored (§1).
-When the project's pages need a component that system does not ship, the project draws it once, in its own leaf, under a `STAND-IN — delete when the design system lands <Component>` marker, and queues a handoff for the shared system's project carrying the same rules and class names, byte for byte. The application writes those classes from the start.
+When the project's pages need a component that system does not ship, the project draws it once, in its own leaf, under a `STAND-IN — delete when the design system lands <Component>` marker, and writes a brief in the **shared system's repository**, `briefs/proposed/<component>.brief.md`, carrying the same rules and class names, byte for byte. The application writes those classes from the start.
 
-- **Byte-identical is the point.** When the component lands, the stand-in is deleted and no markup changes; a stand-in that drifted from its handoff turns landing into a migration.
-- **The queue is an input.** One handoff per component, attached one at a time, deleted once it lands.
+- **Byte-identical is the point.** When the component lands, the stand-in is deleted and no markup changes; a stand-in that drifted from its brief turns landing into a migration.
+- **The request lives with the system that will draw it.** One brief per component, attached to the shared system's project one at a time, and deleted once it lands — never queued inside the product's export, where nothing reviews it and the shared system cannot see it.
 - **Delete the stand-in only against a snapshot that carries the component.** Removed against a stale copy of the shared system, the surface loses its styling and nothing fails.
 
 ## 6. The loop
