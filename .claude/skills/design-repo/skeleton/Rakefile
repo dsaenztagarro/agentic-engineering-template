@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+require "rake/testtask"
+
+# `rake` is the gate before every merge: each generator's check first, then the tests.
+# FILL: the generator's tasks — one that writes dist/, and a `:check` that fails when dist/
+# disagrees with its sources — and put the check ahead of :test in the default.
+task default: %i[test]
+
+Rake::TestTask.new do |t|
+  t.libs << "test" << "lib"
+  t.test_files = FileList["test/**/*_test.rb"]
+  t.warning = false
+end

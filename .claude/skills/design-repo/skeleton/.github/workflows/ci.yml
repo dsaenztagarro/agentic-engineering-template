@@ -1,0 +1,23 @@
+name: CI
+
+# Weekly on the default branch, and by hand. The local `rake` is what guards each merge;
+# this is the backstop that catches a gate nobody ran.
+on:
+  schedule:
+    - cron: "0 8 * * 1" # Monday 08:00 UTC
+  workflow_dispatch:
+
+jobs:
+  rake:
+    name: rake
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # No Gemfile and no bundler: the generators are plain Ruby, so a design repository
+      # clones and runs with nothing installed.
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+
+      - run: rake

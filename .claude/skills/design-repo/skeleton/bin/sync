@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+#
+# sync — mirror a fresh Claude Design export of the __NAME__ project into this repository.
+#
+# KIND names the project type, and with it where the export lands:
+#   project  a Project export     -> pages/   (its _ds/ snapshot included, committed)
+#   system   a Design System export -> system/
+#
+# The mirror is `rsync -a --delete`: a hand edit inside it is reverted without warning, and
+# whatever the export carries becomes this repository's truth. So the export is checked first,
+# and refused — with nothing copied — when it is the wrong kind, when a page is not one
+# canonical prototype per surface, or when it disagrees with a file this repository authors and
+# pushes up (UPSTREAM below). Every delete is confined to this checkout.
+#
+# Usage:
+#   bin/sync [SOURCE]   SOURCE is the export as a zip or a directory.
+#                       Default: ~/Downloads/__NAME__.zip, then ~/Downloads/__NAME__/
+#
+set -euo pipefail
+
+KIND="__KIND__"
+NAME="__NAME__"
+
+# Paths under the export folder that this repository authors and pushes up with /design-sync.
+# An export whose copy differs, or lacks one, is refused. Empty when nothing flows upstream.
+UPSTREAM=()
+
+# Authoring noise a designer leaves in a project, referenced by nothing.
+EXCLUDES=(uploads/ scraps/ '*.png')
+
+repo_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
+case "$KIND" in
+  project) target="$repo_root/pages" ;;
+  system)  target="$repo_root/system" ;;
+  *) echo "error: KIND must be project or system, not '$KIND'." >&2; exit 1 ;;
+esac
+
+# canonicalize_within_repo DIR — DIR's real path, only if it is inside this checkout.
+canonicalize_within_repo() {
+  local real
+  real=$(cd "$1" 2>/dev/null && pwd -P) || { echo "error: cannot resolve path: $1" >&2; exit 1; }
+  case "$real/" in
+    "$repo_root"/*) printf '%s' "$real" ;;
+    *) echo "error: refusing to delete outside this checkout: $real" >&2; exit 1 ;;
+  esac
+}
+
+# --- Resolve the source ------------------------------------------------------
+source=${1:-}
+if [[ -z "$source" ]]; then
+  if [[ -f "$HOME/Downloads/$NAME.zip" ]]; then
+    source="$HOME/Downloads/$NAME.zip"
+  elif [[ -d "$HOME/Downloads/$NAME" ]]; then
+    source="$HOME/Downloads/$NAME"
+  else
+    echo "error: no source given, and neither ~/Downloads/$NAME.zip nor ~/Downloads/$NAME/ exists." >&2
+    exit 1
+  fi
+fi
+
+if [[ -f "$source" ]]; then
+  mkdir -p "$repo_root/tmp"
+  stage=$(canonicalize_within_repo "$repo_root/tmp")/sync
+  rm -rf "$stage"
+  mkdir -p "$stage"
+  trap 'rm -rf "$stage"' EXIT
+  unzip -q -o "$source" -d "$stage"
+  search_root="$stage"
+else
+  search_root="$source"
+fi
+
+# --- Locate the export root, and refuse the other kind -----------------------
+# Both kinds carry _ds_manifest.json: a Design System at its root, a Project nested under
+# _ds/<project>/, the snapshot of the design system its pages are bound to.
+manifest=$(find "$search_root" -type f -name _ds_manifest.json -print | awk '{ print length, $0 }' | sort -n | head -1 | cut -d' ' -f2-)
+if [[ -z "$manifest" ]]; then
+  echo "error: no _ds_manifest.json under $source — is this a Claude Design export?" >&2
+  exit 1
+fi
+manifest_dir=$(dirname "$manifest")
+if [[ "$(basename "$(dirname "$manifest_dir")")" == "_ds" ]]; then
+  export_kind=project
+  export_root=$(dirname "$(dirname "$manifest_dir")")
+else
+  export_kind=system
+  export_root="$manifest_dir"
+fi
+if [[ "$export_kind" != "$KIND" ]]; then
+  echo "error: this is a $export_kind export, and this repository mirrors a $KIND export. Nothing was mirrored." >&2
+  exit 1
+fi
+
+# --- One canonical prototype per surface -------------------------------------
+off_format=$(cd "$export_root" && find . \( -name _ds -o -name uploads -o -name scraps \) -prune -o \
+  -type f \( -name '*-v[0-9]*' -o -name '* v[0-9]*' -o -name '*-audit.*' \
+  -o -name '*-rationale.*' -o -name '*-options.*' \) -print | sed 's|^\./||' | sort)
+if [[ -n "$off_format" ]]; then
+  echo "error: the export carries pages that are not one canonical prototype per surface:" >&2
+  printf '%s\n' "$off_format" | sed 's/^/    /' >&2
+  echo "  Keep the chosen version under its canonical name in Claude Design, delete the rest, re-export." >&2
+  echo "  Nothing was mirrored." >&2
+  exit 1
+fi
+
+# --- Files this repository authors -------------------------------------------
+for path in "${UPSTREAM[@]+"${UPSTREAM[@]}"}"; do
+  if ! cmp -s "$target/$path" "$export_root/$path"; then
+    echo "error: the export's $path differs from the one this repository authors." >&2
+    echo "  It flows up with /design-sync; the design project must not edit it. Nothing was mirrored." >&2
+    exit 1
+  fi
+done
+
+# --- Mirror ------------------------------------------------------------------
+mkdir -p "$target"
+target=$(canonicalize_within_repo "$target")
+exclude_args=()
+for pattern in "${EXCLUDES[@]}"; do exclude_args+=(--exclude "$pattern"); done
+rsync -a --delete "${exclude_args[@]}" "$export_root/" "$target/"
+
+# --- Report; committing is a person's call -----------------------------------
+folder=$(basename "$target")
+if git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  changes=$(git -C "$repo_root" status --short -- "$folder" 2>/dev/null)
+  if [[ -z "$changes" ]]; then
+    echo "$folder/ is already up to date."
+  else
+    printf '%s\n' "$changes" | head -40
+    echo "mirrored into $folder/ — review with: git diff -- $folder"
+  fi
+fi

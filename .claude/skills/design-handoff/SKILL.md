@@ -23,7 +23,7 @@ If this project has no user interface, delete this skill and the design row of `
 **A design project is named for the codebase it draws for** — `<project>-ds` beside `<project>` — so the name says which checkout its export syncs into.
 A design system shared by several projects is named for its brand or the package that ships it, never for its platform: a `web-ds` points at no repository, and stops being true the day a second web system exists.
 
-**Every design repository has one layout**, whether it holds a product's design or a shared design system: [`layout.md`](layout.md) states it folder by folder. Read it before creating a design repository or adding a folder to one.
+**Every design repository has one layout**, whether it holds a product's design or a shared design system: [`layout.md`](layout.md) states it folder by folder. Read it before adding a folder to one; create one with the `design-repo` skill.
 
 The design repository and the design project share a name. Say *repository* or *project*: the difference decides whether an edit survives.
 

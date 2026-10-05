@@ -6,8 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-05
+
 ### Added
 
+- **A `design-repo` skill** that creates a design repository — a product's design or a shared design system — from one skeleton: the root files, `briefs/README.md`, the weekly CI, a `Rakefile` whose `rake` is the gate, and a `bin/sync` for either export kind that refuses an export of the wrong kind, a page that is not one canonical prototype per surface, and an edit to a file the repository authors upstream, with a test for each. It also adopts the layout check in an existing repository.
 - **A layout check for design repositories**, `test/layout_test.rb` in the `design-repo` skill's skeleton: each design repository copies it into its own `test/`, so `rake` fails when the repository leaves the layout — an unnamed root entry, a symlink, an ignored part of an export, a request queue inside an export, a misnamed brief or vendored system, a `CLAUDE.md` that is not an import, scratch left trackable.
 
 ## [0.2.0] - 2026-10-05
@@ -43,6 +46,7 @@ First tagged release of the AI-engineering template — the agent-driven workflo
 - **Skills** — `epic` (turn a design doc into a phased GitHub epic, shipped one ticket at a time) and `template-feedback` (raise a reusable, project-agnostic improvement back to this upstream template).
 - **MIT license** and project README.
 
-[Unreleased]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/dsaenztagarro/agentic-engineering-template/releases/tag/v0.1.0

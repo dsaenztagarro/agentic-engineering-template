@@ -1,0 +1,8 @@
+# bin/sync stages an export here before mirroring it.
+tmp/
+
+# macOS Finder metadata.
+.DS_Store
+
+# Claude Code worktrees, one per ticket; each is its own checkout.
+.claude/worktrees/
