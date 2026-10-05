@@ -20,6 +20,9 @@ If this project has no user interface, delete this skill and the design row of `
 
 <!-- FILL: the real names, and a fourth row if a shared design system is vendored into the design repository. -->
 
+**A design project is named for the codebase it draws for** — `<project>-ds` beside `<project>` — so the name says which checkout its export syncs into.
+A design system shared by several projects is named for its brand or the package that ships it, never for its platform: a `web-ds` points at no repository, and stops being true the day a second web system exists.
+
 The design repository and the design project share a name. Say *repository* or *project*: the difference decides whether an edit survives.
 
 Design content lives outside this repository because it grows without bound, and an application repository carrying it stops being code — one terminal client's pages reached 920 KB before they were moved out.
@@ -34,7 +37,7 @@ The design project holds its own files and nothing else — it cannot open eithe
 
 | route | carries | lifetime |
 |---|---|---|
-| **a brief**, pasted into the project | one ask | spent on arrival; deleted when its surface ships (§6) |
+| **a brief**, pasted into the project | one ask | spent on arrival; deleted when its surface ships (§8) |
 | **`/design-sync`**, from Claude Code | named files, under a plan the person approves | until overwritten |
 | **the export**, downloaded as a zip | the whole project, back to the design repository | a commit of the mirror |
 
@@ -50,7 +53,31 @@ Commit the mirror as produced, defects included, with what you found named in th
 
 If the design repository authors a file the project draws against — a checked palette — that file flows **up** through `/design-sync`, and the sync script refuses an export that disagrees with it.
 
-## 4. The loop
+## 4. A page draws the surface, never the application
+
+The application keeps changing; a drawn page changes only when someone redraws it.
+A sentence on a page about how the application behaves is true the day it is drawn and drifts after, nothing checks it, and the next reader building from the page takes it as current.
+
+- **A page shows a surface in every state it can be in** — empty, loading, error, long data; read, edit and create where they apply. Each state is named in two or three words, and that name is its caption.
+- **Interaction belongs on the page; the business does not.** A prototype may animate a drawer opening, a row expanding, a toast arriving — that is the surface. Validations, save rules, time windows, who may write what and the data model belong to the application, stated by its tests and decision records.
+- **The test for a sentence on a page: could someone open the running application and find it false?** Then it comes out.
+- **The design project keeps no decision log, rulings page or behaviour hand-off.** Each is a second copy of an application record, and drifts from it.
+- **A behaviour question raised by drawing goes back as a question.** It is drawn and labelled as open, never settled on the page, and answered here (§7).
+- **A state that needs a paragraph to be understood is a missing state.** Draw it.
+- **Sweeping claims out of a page removes sentences, never drawings.** An artboard asserts nothing about the application; one that goes out with the prose around it is a defect, sent back through a brief.
+
+**This rule goes into the design project's own `readme.md` through `/design-sync`** when the project is created: it must hold in every export, and a rule pasted into a brief dies with the brief (§2).
+
+## 5. A component the shared design system lacks: one stand-in, landed by deletion
+
+Only where a shared design system is vendored (§1).
+When the project's pages need a component that system does not ship, the project draws it once, in its own leaf, under a `STAND-IN — delete when the design system lands <Component>` marker, and queues a handoff for the shared system's project carrying the same rules and class names, byte for byte. The application writes those classes from the start.
+
+- **Byte-identical is the point.** When the component lands, the stand-in is deleted and no markup changes; a stand-in that drifted from its handoff turns landing into a migration.
+- **The queue is an input.** One handoff per component, attached one at a time, deleted once it lands.
+- **Delete the stand-in only against a snapshot that carries the component.** Removed against a stale copy of the shared system, the surface loses its styling and nothing fails.
+
+## 6. The loop
 
 ```
   a brief in <project>-ds/briefs/proposed/
@@ -67,6 +94,7 @@ If the design repository authors a file the project draws against — a checked 
         v
   review the sync diff: a rule changed or only a comment?
   every changed page well-formed? a removal that orphaned a heading?
+  a drawing gone with the prose around it?
         |
         v
   commit the mirror, as produced; a defect becomes a new brief
@@ -83,20 +111,20 @@ If the design repository authors a file the project draws against — a checked 
 
 **The last step is the one that gets skipped**, because nothing fails when it is.
 
-## 5. Writing a brief
+## 7. Writing a brief
 
 1. **State the constraint; do not cite the artefact.** A decision's ruling is written out as a sentence, with its theme named beside it. A link out of the design repository resolves to nothing at the far end.
 2. **Every proper noun must resolve inside the design project.** Pages, components, tokens — yes. File paths, commands, frameworks, issue numbers — no.
 3. **A brief never cites another brief.** Each is deleted on its own schedule.
 4. **A technical decision belongs in a decision record here, not in the design.** The brief asks Design to *depict* a ruling, never to make it. A behaviour the page must show that nothing has settled is drawn and labelled as an **open question**, never as a rule.
 
-## 6. Closing a brief out
+## 8. Closing a brief out
 
 A brief ends when its surface ships here, so the ticket that ships a surface carries a checkbox to delete its brief. Before the deletion: verify each ask in the design project's export, re-point everything that cited the brief, rewrite future-tense prose about it, and close the tracking issue.
 
 A brief whose asks all landed closes. One where some did not stays, with the remainder reported. One that got what it asked for while the doing broke something else closes, and owes a follow-up brief. The **`brief-closer`** agent does this, and verifies before it deletes.
 
-## 7. What an agent must not do
+## 9. What an agent must not do
 
 - **Edit the export mirror**, or the vendored artefact here.
 - **Style anything outside the vendored artefact** — a colour, a spacing, a component the design system does not ship. The fix is a brief, not a local rule.
