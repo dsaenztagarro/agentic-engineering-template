@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-05
+
 ### Changed
 
 - **Renamed to `agentic-engineering-template`.** "AI engineering" names building applications on language models; this template is about engineering *with* agents.
@@ -17,7 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - **A `brief-closer` agent**, which closes a brief once its surface ships and verifies each ask before deleting anything.
-- **A `design-handoff` skill**, the Claude Design procedure an agent follows when it writes a brief or reads an export back. It rules that a page draws the surface — every state, interaction included — and never the application's behaviour, a rule seeded into the design project's own `readme.md`; names a design project for its codebase and a shared design system for its brand, never its platform; and lands a component the shared system lacks through one byte-identical stand-in, deleted when the component ships.
+- **A `design-handoff` skill**, the Claude Design procedure an agent follows when it writes a brief or reads an export back. It rules that a page draws the surface — every state, interaction included — and never the application's behaviour, a rule seeded into the design project's own `readme.md`; names a design project for its codebase and a shared design system for its brand, never its platform; lands a component the shared system lacks through one byte-identical stand-in and a brief in the shared system's own repository, deleted when the component ships; and states in `layout.md` the one layout every design repository keeps, folder by folder — a product's design and a shared design system alike.
 - **README §10 lists the skills the workflow uses**: the ones shipped here, the ones each project creates (`read-designs`, `design-curator`), and the user-level ones created once for every project (`tracker-plan`, `tracker-resume`, `tracker-pause`, `tracker-close`, `deps-upgrade`, knowledge capture), with the phase of the work each carries.
 
 ### Removed
@@ -37,4 +39,6 @@ First tagged release of the AI-engineering template — the agent-driven workflo
 - **Skills** — `epic` (turn a design doc into a phased GitHub epic, shipped one ticket at a time) and `template-feedback` (raise a reusable, project-agnostic improvement back to this upstream template).
 - **MIT license** and project README.
 
+[Unreleased]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/dsaenztagarro/agentic-engineering-template/releases/tag/v0.1.0
