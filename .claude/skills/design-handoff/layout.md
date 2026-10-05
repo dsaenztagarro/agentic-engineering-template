@@ -2,7 +2,7 @@
 
 Every design repository has the same layout, whatever it designs and whichever Claude Design project type it mirrors.
 A folder means the same thing in each one, so an agent that has worked in one can find its way around any other without reading the README first.
-Read this file before creating a design repository, adding a folder to one, or reviewing one.
+Read this file before creating a design repository, adding a folder to one, or reviewing one; the `design-repo` skill creates one in this layout from its skeleton.
 
 ## Two kinds, one layout
 
