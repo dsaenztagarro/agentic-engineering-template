@@ -69,6 +69,7 @@ A sentence on a page about how the application behaves is true the day it is dra
 - **A behaviour question raised by drawing goes back as a question.** It is drawn and labelled as open, never settled on the page, and answered here (§7).
 - **A state that needs a paragraph to be understood is a missing state.** Draw it.
 - **Sweeping claims out of a page removes sentences, never drawings.** An artboard asserts nothing about the application; one that goes out with the prose around it is a defect, sent back through a brief.
+- **A component's example page is a page too.** It shows the component in each case it has, as states, and nothing else. Each of its rules has one home: the shared system's component file once it has landed there, which is where most of them already are; the comment beside the class for a difference only this product has; a request to the shared system when every product should follow it. Options weighed, research and rollout sweeps belong in the design chat and the tracker. Keeping a page does not exempt it from this rule.
 
 **This rule goes into the design project's own `readme.md` through `/design-sync`** when the project is created: it must hold in every export, and a rule pasted into a brief dies with the brief (§2).
 
