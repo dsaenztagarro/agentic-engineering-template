@@ -44,6 +44,7 @@ The design project holds its own files and nothing else — it cannot open eithe
 | **the export**, downloaded as a zip | the whole project, back to the design repository | a commit of the mirror |
 
 `/design-sync` needs a claude.ai login in Claude Code, and is unavailable on Bedrock, Vertex and Foundry. It writes one change at a time, never as a wholesale replace.
+It never writes `CLAUDE.md` or `.claude/`, which instruct the design agent: a repository that authors its system pushes `AGENTS.md` alone and commits no `CLAUDE.md` beside it, and only a project that authors its own files can create the import.
 
 - **A rule that must hold for every future export goes into the project's own `readme.md` through `/design-sync`**, which the project reads before it draws. Pasted into a brief, the same rule dies with the brief.
 - **The project's agent context holds principles, never decisions about particular elements.** A principle — shape names the field, colour flags attention, absence is calm — holds for elements not drawn yet. A decision about one chip or one column is drawn in its page, and changes without the agent context changing; written into it, the decision becomes a second copy of the page that drifts, and the file grows with the elements instead of with the product's ideas. A ruling that is a principle amends the agent context; a ruling about one element is drawn in that element's page. An index that only names what exists — components, pages, tokens — is not a decision, and stays: it carries no rule to drift.
