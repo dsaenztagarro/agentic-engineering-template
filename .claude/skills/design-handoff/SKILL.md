@@ -62,7 +62,7 @@ If the design repository authors a file the project draws against — a checked 
 The application keeps changing; a drawn page changes only when someone redraws it.
 A sentence on a page about how the application behaves is true the day it is drawn and drifts after, nothing checks it, and the next reader building from the page takes it as current.
 
-- **A page shows a surface in every state it can be in** — empty, loading, error, long data; read, edit and create where they apply. Each state is named in two or three words, and that name is its caption.
+- **A page shows a surface in every state it can be in** — empty, loading, error, long data; read, edit and create where they apply. The states share one page, one panel each, and a state switcher on the page reaches every one of them; nothing shows two states at once. Each state is named in two or three words, and that name is the switcher's label — the page carries no other caption.
 - **Interaction belongs on the page; the business does not.** A prototype may animate a drawer opening, a row expanding, a toast arriving — that is the surface. Validations, save rules, time windows, who may write what and the data model belong to the application, stated by its tests and decision records.
 - **The test for a sentence on a page: could someone open the running application and find it false?** Then it comes out.
 - **The design project keeps no decision log, rulings page or behaviour hand-off.** Each is a second copy of an application record, and drifts from it.
