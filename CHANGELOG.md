@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- **A design project's agent context holds principles only.** `design-handoff` §2: the file the project reads before it draws states principles that hold for elements not drawn yet; a decision about one element is drawn in that element's page, so the file grows with the product's ideas, not its elements.
 - **Triage the brief queue before a reshape.** `design-handoff` §8: a sweep or redraw across many pages starts only once every open brief has been checked against the current export — deleted when landed or outdated, moved when it belongs to the shared system, carried into the reshape or rechecked after it when still open.
 - **How a product's design project keeps its copy of the shared system current.** `design-handoff` §5 states that the project draws against its own `_ds/` copy, which only the project refreshes; the two-read check that tells a stale copy (`landed.md`, `DS-STAMP`, the component-import count); the four landing steps in order; and `ds-sync.md`, the project's record of the current position. The `design-repo` skill carries a starter `ds-sync.md` for the project.
 
