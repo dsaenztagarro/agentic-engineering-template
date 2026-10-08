@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.4.2] - 2026-10-08
+
+### Added
+
+- **Every decision-log issue carries the `decision-log` label.** `docs/adr/README.md` states the issue's shape — titled `decision-log: <theme>`, one comment per amendment, open for as long as its record exists — and the filter that lists every theme's history, `gh issue list --label decision-log --state all`. `AGENTS.md` points an agent at it, and the themes table gains a Decision log column.
+
 ## [0.4.1] - 2026-10-08
 
 ### Fixed
@@ -66,7 +72,8 @@ First tagged release of the AI-engineering template — the agent-driven workflo
 - **Skills** — `epic` (turn a design doc into a phased GitHub epic, shipped one ticket at a time) and `template-feedback` (raise a reusable, project-agnostic improvement back to this upstream template).
 - **MIT license** and project README.
 
-[Unreleased]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.4.2...HEAD
+[0.4.2]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.2.0...v0.3.0
