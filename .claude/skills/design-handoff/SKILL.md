@@ -98,7 +98,7 @@ The copy does not follow the shared system: a request that lands there reaches t
 - **A stale copy is refreshed first** — never a reason to re-send a request, never a copy to compare a page against.
 - **What landed when is history**, on the tracker; the manifests hold only what each side carries now.
 
-A receipt kept by hand — a list of landed requests with a date stamp — was the alternative. It lost because it is correct only while every export remembers to update it, and the first export that forgot made a landed token read as missing to every consumer.
+**Rejected: a receipt kept by hand** — landed requests and a date stamp. It is correct only while every export remembers to update it; the manifests are rewritten by Claude Design every time.
 
 ## 6. The loop
 

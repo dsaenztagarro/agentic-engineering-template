@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-10-08
+
+### Fixed
+
+- **`design-handoff` §5 states its rejected alternative in one line.** The hand-kept receipt is given with the technical reason it loses, without an account of how it failed.
+
 ## [0.4.0] - 2026-10-08
 
 ### Added
@@ -60,7 +66,8 @@ First tagged release of the AI-engineering template — the agent-driven workflo
 - **Skills** — `epic` (turn a design doc into a phased GitHub epic, shipped one ticket at a time) and `template-feedback` (raise a reusable, project-agnostic improvement back to this upstream template).
 - **MIT license** and project README.
 
-[Unreleased]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.1.0...v0.2.0
