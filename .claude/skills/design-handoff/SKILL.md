@@ -84,20 +84,21 @@ When the project's pages need a component that system does not ship, the project
 
 ### The project's copy of the shared system, and how it stays current
 
-A product's design project draws every page against `_ds/`, **its own copy** of the shared system, frozen at the moment it was copied.
-The copy does not follow the shared system: a request that lands there reaches this project only when **the project re-copies `_ds/`**, and nothing does that for it. The export carries whatever copy the project holds, so a sync cannot fix a stale one.
+A product's design project draws every page against `_ds/<id>/`, **its own copy** of the shared system, frozen at the moment it was copied.
+The copy does not follow the shared system: a request that lands there reaches this project only when **the project refreshes its copy**, and nothing does that for it. The export carries whatever copy the project holds, so a sync cannot fix a stale one.
 
-The project keeps that question answered in **`ds-sync.md`**, a file of its own, and reads it before claiming anything about the shared system:
+**Whether the copy is current is read from the manifests Claude Design writes**, never from a file someone keeps by hand. The shared system's `_ds_manifest.json` and the copy's each list the tokens and components they carry, and Claude Design rewrites both on every export, so neither can fall behind what it describes.
 
-1. **The two-read check.** Read the shared system's `landed.md` in its project, then `_ds/landed.md` here. The copy is **stale** when the second is missing, or its `DS-STAMP` or component-import count is behind the first. A stale copy is refreshed first — never a reason to re-send a request, never a copy to compare anything against.
-2. **The landing, in order** — skipping the third step is how a landed component goes on reading as *in flight*:
-   1. the request lands in the shared system's project;
-   2. that project adds a grep sentinel for it to its `landed.md`;
-   3. this project re-copies `_ds/`, and re-runs the sentinel greps against it;
-   4. this project deletes the stand-in the landing retires, and updates `ds-sync.md`.
-3. **`ds-sync.md` states the current position only**: the verdict with its date and stamp, what is in flight by component, and the open questions for the shared system. What landed when is history; it goes on the tracker, and git keeps the old wording.
+- **`bin/ds-status`** in the product's design repository compares `pages/_ds/<id>/_ds_manifest.json` with the shared system's `system/_ds_manifest.json`, and names every token and component the copy lacks, and every token whose value moved. It sees names and values, not a component whose files changed under the same name.
+- **The landing, in order** — skipping the second step is how a landed component goes on reading as missing:
+  1. the request lands in the shared system's project, and its repository syncs the export;
+  2. the product's project refreshes its copy, and its repository syncs that export;
+  3. `bin/ds-status` reports the copy current;
+  4. the stand-in the landing retires is deleted.
+- **A stale copy is refreshed first** — never a reason to re-send a request, never a copy to compare a page against.
+- **What landed when is history**, on the tracker; the manifests hold only what each side carries now.
 
-The `design-repo` skill carries a starter for it.
+A receipt kept by hand — a list of landed requests with a date stamp — was the alternative. It lost because it is correct only while every export remembers to update it, and the first export that forgot made a landed token read as missing to every consumer.
 
 ## 6. The loop
 

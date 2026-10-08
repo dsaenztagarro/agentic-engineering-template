@@ -6,13 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-08
+
 ### Added
 
 - **A page reaches its states through a switcher.** `design-handoff` §4: a surface's states share one page, one panel each, reached through a state switcher on the page, and no view shows two at once; each state's name is the switcher's label, and the page carries no other caption.
 - **A component's example page is held to the page format.** `design-handoff` §4: it shows the component's cases as states and nothing else; each rule it carried goes to the shared system's component file, the comment beside the class, or a request upstream, and options weighed, research and rollout sweeps go to the design chat and the tracker.
 - **A design project's agent context holds principles only.** `design-handoff` §2: the file the project reads before it draws states principles that hold for elements not drawn yet; a decision about one element is drawn in that element's page, so the file grows with the product's ideas, not its elements.
 - **Triage the brief queue before a reshape.** `design-handoff` §8: a sweep or redraw across many pages starts only once every open brief has been checked against the current export — deleted when landed or outdated, moved when it belongs to the shared system, carried into the reshape or rechecked after it when still open.
-- **How a product's design project keeps its copy of the shared system current.** `design-handoff` §5 states that the project draws against its own `_ds/` copy, which only the project refreshes; the two-read check that tells a stale copy (`landed.md`, `DS-STAMP`, the component-import count); the four landing steps in order; and `ds-sync.md`, the project's record of the current position. The `design-repo` skill carries a starter `ds-sync.md` for the project.
+- **How a product's design project knows its copy of the shared system is current.** `design-handoff` §5: the project draws against its own frozen `_ds/` copy, which only the project refreshes; the landing steps in order; and `bin/ds-status`, in the `design-repo` skeleton with its test, which compares the copy's `_ds_manifest.json` with the shared system's and names every token and component the copy lacks. The manifests are written by Claude Design on every export, so the check needs no hand-kept receipt.
 
 ### Removed
 
@@ -58,7 +60,8 @@ First tagged release of the AI-engineering template — the agent-driven workflo
 - **Skills** — `epic` (turn a design doc into a phased GitHub epic, shipped one ticket at a time) and `template-feedback` (raise a reusable, project-agnostic improvement back to this upstream template).
 - **MIT license** and project README.
 
-[Unreleased]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/dsaenztagarro/agentic-engineering-template/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/dsaenztagarro/agentic-engineering-template/releases/tag/v0.1.0

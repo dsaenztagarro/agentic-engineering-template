@@ -16,6 +16,7 @@ docs/                  the contract dist/ keeps
 lib/                   the generator
 dist/                  what crosses into applications — generated, committed
 bin/sync               mirror a fresh export
+bin/ds-status          whether pages/_ds/ carries what the shared system does
 ```
 
 ## Working on it
@@ -23,6 +24,7 @@ bin/sync               mirror a fresh export
 ```bash
 bin/sync        # mirror ~/Downloads/__NAME__.zip; refuses an export of the wrong kind, an off-format page, or an edited upstream file
 rake            # every check, then the tests — the gate before each merge
+bin/ds-status   # a product bound to a shared system: what its _ds/ copy lacks, from the two manifests
 ```
 
 A hand edit inside the export folder is reverted by the next `bin/sync`: a change to what the project draws starts as a brief in `briefs/proposed/`.
