@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# ds-status — what the shared design system carries that this project's copy of it does not.
+#
+# A Claude Design project draws against _ds/<id>/, a copy of the shared system frozen when it was
+# made, and Claude Design writes a _ds_manifest.json into both: the copy's, which the export brings
+# into pages/_ds/<id>/, and the shared system's own, which its repository mirrors into system/.
+# Each lists the tokens and components it carries. Comparing the two is the whole check, and it
+# cannot drift, because Claude Design rewrites both on every export.
+#
+# Usage:
+#   bin/ds-status [SHARED_CHECKOUT]    default: ../__SHARED__, beside this repository
+#
+# Exit 0 when the copy carries everything the shared system does, 1 when it lacks something.
+# A component whose files changed under the same name is not seen: the manifest lists names.
+
+require "json"
+
+root = File.expand_path("..", __dir__)
+shared = ARGV.fetch(0, File.expand_path("../__SHARED__", root))
+
+copies = Dir.glob(File.join(root, "pages/_ds/*/_ds_manifest.json"))
+abort "error: no pages/_ds/<id>/_ds_manifest.json — mirror a project export with bin/sync first." if copies.empty?
+abort "error: more than one design-system copy under pages/_ds/: #{copies.join(', ')}" if copies.size > 1
+
+system_manifest = File.join(shared, "system/_ds_manifest.json")
+abort "error: no #{system_manifest} — pass the shared system's checkout: bin/ds-status <path>" unless File.file?(system_manifest)
+
+def carried(path)
+  manifest = JSON.parse(File.read(path))
+  tokens = manifest.fetch("tokens", []).to_h { |token| [token.fetch("name"), token["value"]] }
+  components = manifest.fetch("components", []).map { |component| component.fetch("name") }.uniq
+  [tokens, components]
+end
+
+copy_tokens, copy_components = carried(copies.first)
+system_tokens, system_components = carried(system_manifest)
+
+missing_tokens = system_tokens.keys - copy_tokens.keys
+changed_tokens = (system_tokens.keys & copy_tokens.keys).reject { |name| system_tokens[name] == copy_tokens[name] }
+missing_components = system_components - copy_components
+
+if missing_tokens.empty? && changed_tokens.empty? && missing_components.empty?
+  puts "current: the copy carries every token and component the shared system lists"
+  exit 0
+end
+
+puts "stale: the copy lacks what the shared system now carries — refresh it in the project, then export and bin/sync"
+missing_components.each { |name| puts "  component  #{name}" }
+missing_tokens.each { |name| puts "  token      #{name}" }
+changed_tokens.each { |name| puts "  token      #{name}  #{copy_tokens[name]} -> #{system_tokens[name]}" }
+exit 1

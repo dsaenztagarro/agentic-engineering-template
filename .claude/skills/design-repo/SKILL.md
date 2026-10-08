@@ -35,8 +35,10 @@ cp -R <this skill>/skeleton/. <name>/
 cd <name>
 grep -rl '__NAME__' . | xargs sed -i '' 's/__NAME__/<name>/g'     # GNU sed: -i without ''
 sed -i '' 's/^KIND="__KIND__"$/KIND="<project|system>"/' bin/sync
-chmod +x bin/sync
+chmod +x bin/sync bin/ds-status
 ```
+
+A product bound to a shared system replaces `__SHARED__` in `bin/ds-status` with that system's repository name. A shared system, or a product bound to none, deletes `bin/ds-status` and `test/ds_status_test.rb`.
 
 Then resolve every `FILL` marker (`grep -rn FILL .`):
 
@@ -56,7 +58,6 @@ Each refusal or guarantee it adds gets a test named for the rule.
 ## 5. Create the Claude Design project
 
 Same name as the repository. Seed its own `readme.md` through `/design-sync` with the rules that must hold in every export — for a product's project, the surface-only rule (`design-handoff` §4).
-For a product's design bound to a shared system, also seed the project with [`project/ds-sync.md`](project/ds-sync.md), its names filled in: the file the project reads to know whether its copy of the shared system is current (`design-handoff` §5). It lives in the project, so it reaches the repository only through an export.
 When paths flow upstream, record the project's id and namespace in `.design-sync/config.json`, and what a future `/design-sync` must know in `.design-sync/NOTES.md`.
 
 ## 6. First export, then the gate

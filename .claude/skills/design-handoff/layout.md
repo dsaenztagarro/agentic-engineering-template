@@ -46,6 +46,7 @@ A product may also own a Design System project of its own, when it extends a sha
 +-- dist/                   the generated artefacts that cross, committed
 +-- bin/
 |   +-- sync                mirror a fresh export
+|   +-- ds-status           whether pages/_ds/ carries what the shared system does   (product)
 |   +-- vendor-sync         refresh vendor/ from the shared system's checkout
 +-- .design-sync/           config.json and NOTES.md, when files are pushed up with /design-sync
 +-- .claude/skills/         skills that only make sense here, such as the contract's
@@ -71,7 +72,7 @@ The requests made **to this repository's Claude Design project**, and nothing el
 
 - **A mirror.** `bin/sync` writes it with `rsync -a --delete`; nobody edits it by hand, and it is committed as produced, defects included.
 - **`pages/_ds/<project-id>/` is committed.** It is the snapshot of the shared system the pages were drawn and render against, as the export carries it. A page must render the same on any clone, so it is never a symlink to a local checkout of the shared system, and never git-ignored.
-- **The design project keeps `ds-sync.md`** beside its pages: whether its `_ds/` copy is current, what is in flight, and the open questions for the shared system — the current position only. It arrives here with the export; `design-handoff` §5 has how the copy is checked and refreshed.
+- **`bin/ds-status` says whether that snapshot is current**, by comparing its `_ds_manifest.json` with the shared system's; `design-handoff` §5 has how the copy is refreshed.
 - The snapshot is not a second source: the shared system's repository is. A diff between `pages/_ds/<project-id>/` and the shared system's `system/` shows how far behind it is.
 - What a page may hold is ruled in §4 of the skill: the surface, never the application.
 
@@ -81,8 +82,6 @@ Two directions, and the README says which path goes which way:
 
 - **Downstream** — drawn in the project, exported, mirrored by `bin/sync`. A hand edit is reverted by the next sync.
 - **Upstream** — authored here, checked by `rake`, pushed to the project with `/design-sync` (a palette, a component tier, the project's own `readme.md`). `bin/sync` **refuses an export that disagrees** with an upstream file, because `--delete` would otherwise overwrite the only copy the checks ran against.
-
-A shared system also keeps `landed.md` in it: one grep sentinel per request that has landed, which is what a consumer checks before deleting its stand-in.
 
 ### `references/`
 
@@ -113,6 +112,7 @@ The generators, and their tests. `test/` also holds `bin/sync`'s tests, each run
   - an export that disagrees with a file this repository authors upstream;
   - a page that is not one canonical prototype per surface — a versioned copy, an audit, a rationale or an options page.
 - It stages into a git-ignored `tmp/`, deletes only inside the checkout, mirrors, reports what changed, and leaves committing to a person.
+- **`ds-status`**, in a product's repository, compares the `_ds/` snapshot's manifest with the shared system's, and exits 1 when the snapshot lacks a token or component the shared system carries.
 - **`vendor-sync`** refreshes `vendor/` from a checkout of the shared system.
 
 ### `.design-sync/`
