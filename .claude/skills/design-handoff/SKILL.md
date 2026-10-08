@@ -79,7 +79,7 @@ Only where a shared design system is vendored (§1).
 When the project's pages need a component that system does not ship, the project draws it once, in its own leaf, under a `STAND-IN — delete when the design system lands <Component>` marker, and writes a brief in the **shared system's repository**, `briefs/proposed/<component>.brief.md`, carrying the same rules and class names, byte for byte. The application writes those classes from the start.
 
 - **Byte-identical is the point.** When the component lands, the stand-in is deleted and no markup changes; a stand-in that drifted from its brief turns landing into a migration.
-- **The request lives with the system that will draw it.** One brief per component, attached to the shared system's project one at a time, and deleted once it lands — never queued inside the product's export, where nothing reviews it and the shared system cannot see it.
+- **The request lives with the system that will draw it.** One brief per component, attached to the shared system's project one at a time, and deleted once it lands.
 - **Delete the stand-in only against a snapshot that carries the component.** Removed against a stale copy of the shared system, the surface loses its styling and nothing fails.
 
 ### The project's copy of the shared system, and how it stays current

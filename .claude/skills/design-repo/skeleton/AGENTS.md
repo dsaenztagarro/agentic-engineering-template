@@ -17,4 +17,4 @@ The rules an agent working in this design repository needs. The consuming applic
 
 ## A request belongs to the project that will draw it
 
-A brief for this project goes in `briefs/proposed/`. A request for something a shared design system should own goes in that system's repository, as a brief there — never queued inside this repository's export.
+A brief for this project goes in `briefs/proposed/`. A request for something a shared design system should own goes in that system's repository, as a brief there.

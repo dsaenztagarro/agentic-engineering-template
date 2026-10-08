@@ -53,7 +53,7 @@ A product may also own a Design System project of its own, when it extends a sha
 
 A folder that does not apply is absent, never empty. A folder not in this tree is not added without amending this file first.
 
-**`test/layout_test.rb` holds a repository to this layout** in its own `rake`: the closed rules below — the root's entries, no symlinks, nothing in an export ignored, no queue inside an export, how briefs and vendored systems are named, `CLAUDE.md` as an import, scratch kept untracked. Every design repository carries a copy of it, taken from the `design-repo` skill's skeleton and refreshed from there, never edited in place.
+**`test/layout_test.rb` holds a repository to this layout** in its own `rake`: the closed rules below — the root's entries, no symlinks, nothing in an export ignored, how briefs and vendored systems are named, `CLAUDE.md` as an import, scratch kept untracked. Every design repository carries a copy of it, taken from the `design-repo` skill's skeleton and refreshed from there, never edited in place.
 
 ## Folder by folder
 
@@ -129,7 +129,6 @@ The generators, and their tests. `test/` also holds `bin/sync`'s tests, each run
 
 - **The application's behaviour** — validations, save rules, the data model. Tests in the application hold it.
 - **The reasoning behind an application decision.** The application's decision records hold it; a brief states the ruling in a sentence.
-- **A queue of requests inside an export** (`ds-graduation/`, `handoffs/`). An export folder is a mirror, so nothing in it can be reviewed as a request; requests are briefs, in the repository that will draw them.
 - **A symlink into another checkout.** What a clone renders, builds or tests must come from that clone.
 - **A copy of another design repository's pages** — a terminal client's mockups inside a web product's repository. Each design has one repository.
 - **A file per work item** — a spec per feature, a log per sync, an archive of shipped briefs.
